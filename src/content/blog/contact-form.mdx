@@ -1,0 +1,245 @@
+---
+tag:
+  - Features
+title: CommonJS 与 ES 模块：从 require 到 import 的转变
+description: Nebulix contact form, get your leads trough MailGun, Postmark or Slack!
+intro: Get your leads trough MailGun, Postmark or Slack!
+style:
+  template: split
+  card_template: grid
+  hero_template: image
+  hero_image_opacity: ""
+  container: none
+pubDate: 2023-10-24T10:42:11.719Z
+thumbnail: /src/assets/cosmic_contact_settings.jpeg
+---
+
+# CommonJS 与 ES 模块：从 require 到 import 的转变
+
+## 一、[](https://dev.to/nikolasbarwicki/commonjs-vs-es-modules-the-shift-from-require-to-import-18fo#introduction)前言🤗
+
+本文旨在揭示JavaScript模块系统的复杂细节，主要关注其中的差异之处。深入研究与CommonJS模块相关的传统require语法，将其与ES Modules（ESM）的现代import语法进行对比分析，并探讨文件扩展名（.js与.mjs）的重要性。此外，还将揭开package.json中type属性的神秘面纱，讨论它如何影响Node.js等运行时环境对JavaScript文件的解释方式。
+
+**开启`JavaScript`模块之旅吧， 看完你将会得到很大的收获！！！💖**
+
+## [](https://dev.to/nikolasbarwicki/commonjs-vs-es-modules-the-shift-from-require-to-import-18fo#evolution-of-javascript-modules)JavaScript 模块的演变
+
+最初，JavaScript没有内置模块系统。开发者依靠在HTML文档中包含多个`<script>`标签来加载脚本。这种方法简单易行，但存在一些挑战，包括命名空间污染、依赖管理困扰以及封装性不足。JavaScript模块的历史是语言发展和社区持续努力解决其限制的证明。
+
+### [](https://dev.to/nikolasbarwicki/commonjs-vs-es-modules-the-shift-from-require-to-import-18fo#from-script-tags-to-amd)从脚本标签到 AMD
+
+随着Web应用程序变得越来越复杂，有必要找到一种更有结构性的方式来组织JavaScript代码。这导致了异步模块定义`AMD`的开发。AMD旨在实现模块的异步加载，通过允许非阻塞行为来改善网页性能。像RequireJS这样的工具推广了AMD格式，使开发者能够以更可管理的方式定义模块及其依赖关系。
+
+### [](https://dev.to/nikolasbarwicki/commonjs-vs-es-modules-the-shift-from-require-to-import-18fo#the-rise-of-commonjs)CommonJS 的兴起
+
+然而，AMD对异步加载的侧重并不完全适用于所有用例，特别是在服务器端开发中，模块可以同步从文件系统加载的情况下。这一空白被CommonJS填补，CommonJS是最初设计用于Node.js的模块系统的。CommonJS模块允许更简单的语法和同步加载，使其非常适合**服务器端**应用程序。在Node.js中，require函数和module.exports成为模块交互的主要方式，促进了npm上丰富的软件包生态系统的发展。
+
+### [](https://dev.to/nikolasbarwicki/commonjs-vs-es-modules-the-shift-from-require-to-import-18fo#emergence-of-es-modules)ES模块的出现
+
+JavaScript模块演化的最新篇章是ES模块（ESM）的引入，它在ECMAScript 2015（ES6）中被标准化。ESM引入了import和export语法，为JavaScript首次引入了原生模块系统。与CommonJS不同，ESM设计用于在**浏览器**和**服务器**上都能工作，提供了静态分析的好处、摇树（`Tree Shaking`消除未使用代码）以及更高效的加载机制。
+
+## 二、[](https://dev.to/nikolasbarwicki/commonjs-vs-es-modules-the-shift-from-require-to-import-18fo#why-the-evolution-matters)为什么演变很重要🤔？
+
+理解这种演变对于当今的 JavaScript 开发人员至关重要，原因如下：
+
+- **跨环境兼容性：** 了解模块系统之间的差异允许开发人员编写跨不同环境（例如 Node.js、Web 浏览器）兼容的代码。
+- **性能优化：**  ESM 的静态特性允许进行诸如 `Tree Shaking` 之类的优化，这可以显著减小 Web 应用程序的大小。
+- **面向未来的项目：** 随着 JavaScript 生态系统继续采用 ESM，理解和采用此标准有助于确保项目保持可维护性和向前兼容。
+- **社区和生态系统参与：** 对 JavaScript 模块的深入了解可以增强您参与开源项目并为之做出贡献的能力，其中许多项目正在过渡到或已经在使用 ESM。
+
+从`<script>`脚本标签到`AMD`到`CommonJS`再到`ES `模块的转变不仅突显了 JavaScript 作为一种语言的技术进步，而且还突显了社区应对其挑战的承诺。对于开发人员来说，我们有必要跟上这些变化，这也是我们掌握现代 JavaScript 开发实践的必经之路呀。
+
+## 三、[](https://dev.to/nikolasbarwicki/commonjs-vs-es-modules-the-shift-from-require-to-import-18fo#commonjs-and-es-modules-key-differences)CommonJS 和 ES 模块：主要区别
+
+在 JavaScript 模块化领域，有两个系统脱颖而出：CommonJS (CJS) 和 ES Modules (ESM)。了解这些系统之间的差异对于前端开发人员探索 JavaScript 生态系统至关重要，尤其是在 Node.js 和浏览器等不同环境中工作时。下面详细介绍下主要区别：🤯
+
+### [](https://dev.to/nikolasbarwicki/commonjs-vs-es-modules-the-shift-from-require-to-import-18fo#syntax-differences)1. 语法差异
+
+CommonJS 和 ES 模块之间最明显的区别是用于导入和导出模块的语法。
+
+- **CommonJS：** 利用`require()`导入模块和`module.exports`或者`exports`导出模块的功能。这种语法对于许多 JavaScript 前端开发人员来说非常简单且熟悉，尤其是那些具有 Node.js 背景的开发人员。
+
+```
+// 使用 CommonJS 导入
+const express = require('express');
+
+// 使用 CommonJS 导出
+module.exports = function() {
+  // Some functionality
+};
+```
+
+- **ES模块：** 使用`import`导入语句和`export`导出语句。此语法更具声明性，支持导入和导出多个值，以及重命名导入和导出。
+
+```
+// 使用ES Modules 导入
+import express from 'express';
+
+// 使用 ES Modules 导出
+export function myFunction() {
+  // Some functionality
+};
+```
+
+### [](https://dev.to/nikolasbarwicki/commonjs-vs-es-modules-the-shift-from-require-to-import-18fo#environment-usage)2. 使用环境
+
+- **CommonJS：** 主要用于 Node.js 中的服务器端开发。 CommonJS 的同步加载非常适合服务器，从本地文件系统加载模块，最大限度地减少同步 I/O 操作的影响。
+- **ES 模块：** 设计为既适用于浏览器端又适用于服务器端JavaScript的通用模块系统。ESM的静态结构使得在构建工具中进行摇树操作成为可能，从而导致前端应用程序可以生成更小的包。现代浏览器原生支持ESM，而Node.js在最近的版本中添加了对ES模块的支持，尽管在实现和文件解析上存在一些差异（能用、够用）。
+
+### [](https://dev.to/nikolasbarwicki/commonjs-vs-es-modules-the-shift-from-require-to-import-18fo#dynamic-vs-static-structure)3. 动态与静态结构
+
+> 动态与静态的区别在于程序行为是否在运行时才确定。动态意味着行为在运行时才确定，而静态则意味着行为在编译/解析时已经确定。
+
+- **CommonJS：** 提供动态导入，这意味着`require()`可以在函数或代码块内有条件地调用语句。这种动态特性给予了代码灵活性，但限制了某些优化，例如摇树优化。
+- **ES 模块：** 是静态的，这意味着`import`和`export`语句必须位于模块的顶层。此限制允许进行静态分析，从而实现诸如树摇动之类的优化以及通过工具和 IDE 更轻松地进行静态分析。
+
+> 进一步解释：- 在ESM中，所有的导入（`import`）和导出（`export`）语句必须在模块的顶层进行声明，不能在运行时动态执行。这意味着编译器或解析器可以在编译/解析阶段静态分析模块的依赖关系，而不必等到运行时。由于静态结构的特性，编译器可以准确地知道哪些模块被使用，哪些没有被使用，从而在构建时可以轻松地识别和删除未使用的代码。（还不懂只能自己去找其他教程深入了解啦🍔）
+
+## 三、[](https://dev.to/nikolasbarwicki/commonjs-vs-es-modules-the-shift-from-require-to-import-18fo#implications-for-developers)对开发人员的影响
+
+CommonJS 和 ES 模块之间的选择会影响 JavaScript 项目的各个方面，从结构和构建过程到兼容性和性能优化。虽然 CommonJS 在 Node.js 环境中仍然很流行，但更大部分的 JavaScript 相关社区已经越来越多地采用 ES 模块，因为它在**静态分析**和**跨环境兼容性**方面具有优势。
+
+对于开发人员来说，了解这些差异对做出有关模块结构的明智决策至关重要，特别是在同时面向服务器端和浏览器环境的项目中。在模块系统之间进行转换或维护使用两者的代码可能会比较容易抓襟见肘，但通过清楚地掌握两者重的关键差异，咱们开发就能得心应手啦。
+
+## 四、[](https://dev.to/nikolasbarwicki/commonjs-vs-es-modules-the-shift-from-require-to-import-18fo#js-vs-mjs-significance-and-usage).js 与 .mjs 扩展名的意义和用法
+
+> ES 模块（ESM）的引入不仅为 JavaScript 生态系统带来了新的语法，还带来了新的文件扩展名：`.mjs`。作为开发人员，我们当然需要理解在 Node.js 中，`.mjs`、`.js`文件之间对模块处理的差异啦。
+
+### 1. [](https://dev.to/nikolasbarwicki/commonjs-vs-es-modules-the-shift-from-require-to-import-18fo#purpose-behind-mjs).mjs 背后的目的
+
+扩展名`.mjs`明确表示文件应被视为 ES 模块。由于 Node.js 现有对使用`.js`扩展的 CommonJS 模块的支持，因此这种区别变得非常有必要。如果没有明确的区别，Node.js 无法可靠地确定如何解释给定的 JavaScript 文件 —— 无论是作为 CommonJS 模块还是 ES 模块。
+
+### 2. [](https://dev.to/nikolasbarwicki/commonjs-vs-es-modules-the-shift-from-require-to-import-18fo#how-nodejs-treats-js-and-mjs-files)那么 Node.js 如何处理 `.js` 和 `.mjs` 文件的呢🤔？
+
+- **`.js` 文件：** 默认情况下，Node.js 将`.js`文件视为 CommonJS 模块。此行为与 Node.js 的历史使用一致，并确保与绝大多数现有 JavaScript 项目的向后兼容性。
+- **`.mjs` 文件：** 具有扩展名的文件`.mjs`始终被 Node.js 视为 ES 模块。这种清晰的界限使开发人员能够毫无歧义地使用现代模块语法。
+
+### 3. [](https://dev.to/nikolasbarwicki/commonjs-vs-es-modules-the-shift-from-require-to-import-18fo#the-implications-for-developers)对开发人员的影响
+
+双文件扩展系统要求开发人员注意如何构建和命名模块文件，特别是在可能使用两种模块系统的项目中。以下是一些可能会出现的影响：
+
+- **明确性和清晰度：** 使用`.mjs`可以提供清晰度，使其他开发人员立即清楚该文件是 ES 模块。这种明确性在混合代码库项目中特别有用。
+- **配置简单：** 在采用 ES 模块作为标准的项目中，使用 .mjs 扩展名可以简化配置，因为无需在 package.json 或编译器/打包工具的设置中额外配置将 .js 文件视为 ES 模块。
+- **兼容性注意事项：** 虽然现代浏览器环境支持`.mjs`，但某些工具或旧环境可能不支持。开发人员在决定是否使用`.mjs`.
+
+### 4. [](https://dev.to/nikolasbarwicki/commonjs-vs-es-modules-the-shift-from-require-to-import-18fo#transitioning-between-extensions)在扩展之间转换
+
+将项目转换为使用`.mjs`文件或将`.mjs`文件集成到现有项目中可能涉及多个步骤，包括更新构建流程、确保与第三方工具的兼容性以及可能修改导入语句以反映新的文件扩展名。
+
+## 五、[](https://dev.to/nikolasbarwicki/commonjs-vs-es-modules-the-shift-from-require-to-import-18fo#the-raw-type-endraw-property-in-raw-packagejson-endraw-explained)`package.json` 中属性 `type` 属性是什么玩意😵？
+
+> 在 JavaScript 模块和不断发展的生态系统的背景下，项目中`package.json`的`type`属性主要用来确定 Node.js 如何解释`.js`文件。该属性提供了一种设置项目中 JavaScript 文件默认模块系统（CommonJS 或 ES 模块）的方式。
+
+### 1. [](https://dev.to/nikolasbarwicki/commonjs-vs-es-modules-the-shift-from-require-to-import-18fo#understanding-the-raw-type-endraw-field)了解`type`属性
+
+`package.json` 中的 `type` 可以有两个可能的值：
+
+- **"commonjs"** ：如果未指定字段，默认为commonjs。通过此设置，`.js`文件将被视为 CommonJS 模块。此设置与 Node.js 的传统模块系统保持一致，并且向后兼容绝大多数 Node.js 项目。
+- **"module"** ：当该`type`字段设置为“module”时，`.js`文件将被视为 ES 模块。此设置允许开发人员直接在文件中使用`import`语法，而无需使用扩展名。这对于专门使用 ES 模块语法的项目特别有用。`export``.js``.mjs`
+
+### 2. [](https://dev.to/nikolasbarwicki/commonjs-vs-es-modules-the-shift-from-require-to-import-18fo#implications-for-developers)对开发人员的影响
+
+包含该`type`属性提供了灵活性，但也需要仔细考虑：
+
+- **项目配置**：该`type`设置影响`.js`项目中（或文件范围内`package.json`）所有文件的解释方式。错误地设置该值可能会导致模块解析错误或意外行为。
+- **混合模块类型**：在 CommonJS 和 ES 模块文件共存的项目中，开发人员需要注意设置`type`。例如，如果`type`设置为“module”，CommonJS 文件必须使用`.cjs`扩展名才能被正确视为 CommonJS 模块。
+- **兼容性和工具**：虽然该`type`领域受到 Node.js 的尊重，并且越来越多地受到 JavaScript 生态系统中工具的尊重，但开发人员应该验证与其工具链的兼容性，包括打包工具、linter和转译器。
+
+### [](https://dev.to/nikolasbarwicki/commonjs-vs-es-modules-the-shift-from-require-to-import-18fo#practical-examples)😘这是一个例子
+
+设置`type`字段`package.json`：
+
+```
+{
+  "type": "module"
+}
+```
+
+此配置告诉 Node.js 将`.js`项目中的所有文件视为 ES 模块。相反，将其设置为`"commonjs"`会将它们视为 CommonJS 模块。
+
+## 六、 [](https://dev.to/nikolasbarwicki/commonjs-vs-es-modules-the-shift-from-require-to-import-18fo#practical-guide-to-using-raw-import-endraw-and-raw-require-endraw-) `import`和`require` 使用指南
+
+`import`对于跨不同环境和模块系统工作的开发人员来说，了解 JavaScript 之间和JavaScript 中的区别`require`至关重要。本节提供了有关何时以及如何使用这两种方法进行模块导入的实用指南，包括动态导入的注意事项，动态导入充当 CommonJS 和 ES 模块之间的桥梁。
+
+### [](https://dev.to/nikolasbarwicki/commonjs-vs-es-modules-the-shift-from-require-to-import-18fo#when-to-use-raw-import-endraw-)何时使用`import`
+
+- **ES 模块中的静态导入**：用于`import`静态导入 ES 模块 (ESM)。此语法非常适合支持 ES 模块的前端代码和服务器端 JavaScript。它允许进行诸如树摇之类的优化，并确保静态分析工具可以有效地分析模块依赖关系。
+
+```
+// 从一个模块导入单个导入
+import { fetchData } from './dataFetcher.mjs';
+
+// 默认导入
+import express from 'express';
+```
+
+- **ES 模块中的动态导入**：对于需要有条件或异步加载模块的情况，ES 模块提供动态导入语法。这会返回一个Promise，使其适合在需要代码分割或延迟加载的应用程序中使用。
+
+```
+if (condition) {
+  import('./module.mjs').then((module) => {
+    module.doSomething();
+  });
+}
+```
+
+### [](https://dev.to/nikolasbarwicki/commonjs-vs-es-modules-the-shift-from-require-to-import-18fo#when-to-use-raw-require-endraw-)何时使用`require`
+
+- **CommonJS 环境**：`require`是在 Node.js 应用程序和其他 CommonJS 环境中导入模块的传统方式。它是同步且简单的，使其适合从本地文件系统加载模块的服务器端应用程序。
+
+```
+const fs = require('fs');
+
+const data = fs.readFileSync('/path/to/file.txt', 'utf8');
+```
+
+- **条件导入**：尽管许多环境现在支持使用 import() 进行动态导入，但在 CommonJS 模块中仍然可以使用 require 进行同步的条件导入。
+
+```
+let library;
+if (condition) {
+  library = require('library');
+}
+```
+
+### [](https://dev.to/nikolasbarwicki/commonjs-vs-es-modules-the-shift-from-require-to-import-18fo#bridging-the-gap-dynamic-imports)缩小差距：动态导入
+
+动态导入 ( `import()` ) 提供了一种强大的机制来弥合 CommonJS 和 ES 模块之间的差距。它们允许异步和有条件地加载代码，适合各种用例，例如模块的延迟加载或基于运行时检查的条件加载。
+
+### [](https://dev.to/nikolasbarwicki/commonjs-vs-es-modules-the-shift-from-require-to-import-18fo#practical-tips)实用技巧
+
+- **从 CommonJS 迁移到 ES 模块的重构**：当迁移项目时，首先从 require 转换为 import 的模块语法开始。这可能还涉及将文件重命名为 .mjs 或者在 package.json 中调整 type 属性，如果你希望将 .js 用于 ES 模块。
+- **混合模块系统**：虽然在同一个项目中混合使用 import 和 require 是可能的，但通常建议保持一致性，坚持使用一种模块系统。如果必须混合使用，要明确界定边界，并尽可能使用动态导入将 CommonJS 模块加载到 ES 模块代码中。
+- **混合模块系统**：虽然在同一个项目中混合使用 import 和 require 是可能的，但通常建议保持一致性，坚持使用一种模块系统。如果必须混合使用，要明确界定边界，并尽可能使用动态导入将 CommonJS 模块加载到 ES 模块代码中。
+
+## [](https://dev.to/nikolasbarwicki/commonjs-vs-es-modules-the-shift-from-require-to-import-18fo#transitioning-and-compatibility-strategies)七、模块转变时的过渡和兼容性策略
+
+> 随着 JavaScript 生态系统稳步向 ES 模块 (ESM) 作为标准发展，许多开发人员面临着将项目从 CommonJS (CJS) 过渡到 ESM 的挑战。这种转变可以增强模块管理，实现树摇动，并使项目与不断发展的 Web 开发标准保持一致。然而，过渡需要仔细规划和执行，以避免常见的陷阱。以下是成功从 CJS 过渡到 ESM 以及保持混合模块系统项目中的兼容性的一些策略和技巧。
+
+### [](https://dev.to/nikolasbarwicki/commonjs-vs-es-modules-the-shift-from-require-to-import-18fo#gradual-transition-approach)渐进过渡法
+
+1.  **评估您的项目的依赖关系**：在开始过渡之前，评估您的项目的外部依赖关系是否支持 ESM。此步骤至关重要，因为 CJS 和 ESM 依赖项的混合可能会使转换变得复杂。
+1.  **从叶模块开始**：从“叶”模块（不依赖于项目中其他模块的模块）开始过渡，并逐渐过渡到“根”模块（应用程序入口点依赖的模块） 。这种自下而上的方法可以最大限度地减少干扰。
+1.  **使用互操作性功能**：Node.js 提供互操作性功能，将 CJS 模块导入到 ESM 中，反之亦然。利用`import()`将 CJS 模块动态导入到 ESM 代码中，并使用需要保持原样的 CJS 文件的`.cjs`扩展名或声明。`package.json` `"type": "commonjs"`
+
+### [](https://dev.to/nikolasbarwicki/commonjs-vs-es-modules-the-shift-from-require-to-import-18fo#ensuring-compatibility)确保兼容性
+
+1.  **双包危险**：请注意双包危险，其中一个包可能会以不同的形式（CJS 和 ESM）加载两次，从而导致错误和不一致。通过不混合不同格式的同一包的导入来避免这种情况。
+1.  **发布双包**：如果您正在维护一个库，请考虑将其发布为双包，支持 CJS 和 ESM。这可以通过在 中指定`"main"`（对于 CJS）和`"module"`（对于 ESM）字段`package.json`并仔细组织源文件以确保兼容性来实现。
+1.  **跨环境测试**：在所有目标环境（例如 Node.js、浏览器、捆绑器）中测试您的项目以确保兼容性。自动化测试工具和持续集成 (CI) 服务可以帮助简化此流程。
+
+### [](https://dev.to/nikolasbarwicki/commonjs-vs-es-modules-the-shift-from-require-to-import-18fo#avoiding-common-pitfalls)避免常见的陷阱
+
+1.  **混合模块语法**：避免在同一模块中混合 CJS 和 ESM 语法，因为它可能导致混乱的行为和兼容性问题。每个文件坚持一种模块格式。
+1.  **动态导入语法**：记住`import()`返回一个承诺。确保您的代码正确处理异步加载，尤其是在从同步调用进行重构时`require()`。
+1.  **工具支持**：确保您的构建工具、linter 和其他开发工具支持 ESM。大多数现代工具都可以，但配置可能需要更新。
+
+### [](https://dev.to/nikolasbarwicki/commonjs-vs-es-modules-the-shift-from-require-to-import-18fo#tips-for-maintaining-compatibility)保持兼容性的技巧
+
+1.  **代码分割和延迟加载**：对于 Web 项目，请使用同时支持 CJS 和 ESM 的打包程序，例如 Webpack 或 Rollup。它们可以帮助进行代码分割和延迟加载，从而提高应用程序性能。
+1.  **旧环境的转译**：使用 Babel 或 TypeScript 将 ESM 代码转译为 CJS，以与不支持 ESM 的旧 JavaScript 环境兼容。
+1.  **文档和团队沟通**：清楚地记录项目的模块系统和任何互操作性注意事项。让您的团队了解您为模块使用而采用的标准和实践。
+
+## [](https://dev.to/nikolasbarwicki/commonjs-vs-es-modules-the-shift-from-require-to-import-18fo#conclusion)结论
+
+JavaScript 模块的复杂性之旅 —— 从它们的演变、CommonJS 和 ES 模块之间的差异、.js 和 .mjs 扩展名的重要性，到 package.json 中 type 属性的战略性使用，以及过渡和兼容性的实用指南。突显了 JavaScript 的灵活性，这就是js的魅力所在。
